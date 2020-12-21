@@ -1,0 +1,23 @@
+spring:
+   # Spring JDBC configuration
+   datasource:
+      url: jdbc:postgresql://localhost:26257/blogpostdb
+      username: root
+      password:
+   # Spring Data JPA configuration
+   jpa:
+      generate-ddl: true
+      hibernate:
+         # To be updated in real production usage
+         # options: create, update, create-drop, validate, none
+         # update: add   columns, constraints but never remove a column or constraint that may have existed previously
+         ddl-auto: none
+
+#springdoc:
+#   swagger-ui:
+#      path: /api-docs
+
+
+
+
+
