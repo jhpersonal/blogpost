@@ -8,4 +8,5 @@ class BlogpostApplication
 
 fun main(args: Array<String>) {
     runApplication<BlogpostApplication>(*args)
+//    SpringApplication.run(InMemoryAuthApplication::class.java, args)
 }

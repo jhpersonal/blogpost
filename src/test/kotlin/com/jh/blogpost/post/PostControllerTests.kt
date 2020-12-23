@@ -2,78 +2,120 @@ package com.jh.blogpost.post
 
 import com.jh.blogpost.user.User
 import junit.framework.Assert.assertEquals
-import net.bytebuddy.agent.VirtualMachine
-import org.springframework.boot.test.web.client.TestRestTemplate
-import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.test.context.SpringBootTest.WebEnvironment
-import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.test.context.junit4.SpringRunner
-
-import org.junit.runner.RunWith
-import net.bytebuddy.agent.VirtualMachine.ForHotSpot.Connection.ForJnaWindowsNamedPipe.Factory.LIBRARY_NAME
+import org.assertj.core.api.Assertions.assertThat
+import org.junit.Assert
+import org.junit.Before
 import org.junit.Test
-import org.springframework.boot.test.web.client.postForEntity
-
-
+import org.junit.jupiter.api.BeforeAll
+import org.junit.jupiter.api.BeforeEach
+import org.junit.runner.RunWith
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.boot.test.web.client.TestRestTemplate
+import org.springframework.http.HttpStatus
+import org.springframework.test.context.junit4.SpringRunner
 import org.springframework.http.ResponseEntity
+import org.springframework.web.server.ResponseStatusException
+import java.lang.Exception
+import org.springframework.boot.web.server.LocalServerPort
+import org.springframework.test.context.ActiveProfiles
+import java.net.URI
+import org.springframework.hateoas.config.HypermediaWebClientConfigurer
 
-import org.springframework.http.HttpEntity
+import org.springframework.boot.web.reactive.function.client.WebClientCustomizer
+import org.springframework.context.annotation.Bean
+import org.springframework.hateoas.config.HypermediaRestTemplateConfigurer
+
+import org.springframework.boot.web.client.RestTemplateCustomizer
+import org.springframework.web.client.RestTemplate
 
 
-
-
+@Bean
+fun restTemplateCustomizer(configurer: HypermediaRestTemplateConfigurer): RestTemplateCustomizer {
+    return RestTemplateCustomizer { restTemplate: RestTemplate -> configurer.registerHypermediaTypes(restTemplate) }
+}
 
 @RunWith(SpringRunner::class)
-@SpringBootTest(webEnvironment = WebEnvironment.DEFINED_PORT)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+//@ActiveProfiles("local")
 class PostControllerTests {
+
     @Autowired
-    lateinit var template: TestRestTemplate
+    lateinit var testRestTemplate: TestRestTemplate
+    val uri = "/posts"
 
-    private val POST_ENDPOINT = "http://localhost:8081/posts/"
-    private val USER_ENDPOINT = "http://localhost:8081/users/"
-    private val POST_TITLE = "Controller Test Title"
-    private val POST_CONTENT = "Controller Test Content"
-    private val USER_NAME = "Brigette Ann"
-    private val USER_EMAIL = "brigette_ann@controllertest.com"
-
+    //GET
+    @Test
+    fun authenticatedGetPostsShouldSucceedWith200() {   //EDITOR ROLE
+//        saveOneUser()
+        val result: ResponseEntity<String> = testRestTemplate.withBasicAuth("editor", "pass").getForEntity(uri, String::class.java)
+        println(result)
+        assertEquals(HttpStatus.OK, result.statusCode)
+    }
 
     @Test
-    fun whenSaveOneToManyRelationship_thenCorrect() {
-        val user = User(USER_NAME, USER_EMAIL)
-        template.postForEntity(USER_ENDPOINT, user, User::class.java)
-
-//        val post1 = Post(POST_TITLE, POST_CONTENT, user)
-//        template.postForEntity(POST_ENDPOINT, post1, Post::class.java)
-
-        val userGetResponse = template.getForEntity("$POST_ENDPOINT/1/users", User::class.java)
-        assertEquals(USER_NAME, userGetResponse.body?.name)
-
-
-//        val library = Library(VirtualMachine.ForHotSpot.Connection.ForJnaWindowsNamedPipe.Factory.LIBRARY_NAME)
-//        template!!.postForEntity(LIBRARY_ENDPOINT, library, Library::class.java)
-//        val book1 = Book("Dune")
-//        template.postForEntity(BOOK_ENDPOINT, book1, Book::class.java)
-//        val book2 = Book("1984")
-//        template.postForEntity(BOOK_ENDPOINT, book2, Book::class.java)
-//        val requestHeaders = HttpHeaders()
-//        requestHeaders.add("Content-Type", "text/uri-list")
-//        val bookHttpEntity = HttpEntity("$LIBRARY_ENDPOINT/1", requestHeaders)
-//        template.exchange(
-//            "$BOOK_ENDPOINT/1/library",
-//            HttpMethod.PUT, bookHttpEntity, String::class.java
-//        )
-//        template.exchange(
-//            "$BOOK_ENDPOINT/2/library",
-//            HttpMethod.PUT, bookHttpEntity, String::class.java
-//        )
-//        val libraryGetResponse = template.getForEntity(
-//            "$BOOK_ENDPOINT/1/library",
-//            Library::class.java
-//        )
-//        assertEquals(
-//            "library is incorrect",
-//            libraryGetResponse.body.getName(),
-//            VirtualMachine.ForHotSpot.Connection.ForJnaWindowsNamedPipe.Factory.LIBRARY_NAME
-//        )
+    @Throws(Exception::class)
+    fun unauthenticatedGetUserShouldFailWith401() {
+        val result: ResponseEntity<String> = testRestTemplate.getForEntity(uri, String::class.java)
+        assertEquals(HttpStatus.UNAUTHORIZED, result.statusCode)
     }
+   /*
+    //POST
+    @Test
+    fun authenticateCreatePostsShouldSucceedWith200() {     //EDITOR ROLE
+        val user = User("testuser", "testuser@controllertest.com")
+        val blogPost = BlogPost("blog post title", "blog post content", user)
+        val result: ResponseEntity<BlogPost> = testRestTemplate.withBasicAuth("editor", "pass")
+            .postForEntity(uri, blogPost, BlogPost::class.java)
+        println(result)
+        assertEquals(HttpStatus.CREATED, result.statusCode)
+    }
+
+    //DELETE
+    @Test
+    fun authenticateDeletePostsShouldSucceedWith200() {     //EDITOR ROLE
+        val user = User("testuser", "testuser@controllertest.com")
+        val blogPost = BlogPost("blog post title", "blog post content", user)
+        val result: ResponseEntity<BlogPost> = testRestTemplate.withBasicAuth("editor", "pass")
+            .postForEntity(uri, blogPost, BlogPost::class.java)
+        assertEquals(HttpStatus.CREATED, result.statusCode)
+
+        println("created post id: ${result.body?.id}")
+        val postByIdUri = "{uri}/${result.body?.id}"
+        testRestTemplate.delete(postByIdUri)
+
+        try {
+            testRestTemplate.withBasicAuth("editor", "pass").getForEntity(postByIdUri, BlogPost::class.java)
+        } catch (ex: ResponseStatusException) {
+            assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, ex.rawStatusCode)
+        }
+    }
+
+    //GET Posts by author
+    @Test
+    fun authenticateGetPostByAuthorShouldSucceedWith200() {     //EDITOR ROLE
+        val user = User("postbyauthor", "postbyauthor@controllertest.com")
+        val blankPost = BlankPost("blank post title", "blank post content", user)
+        val result: ResponseEntity<BlankPost> = testRestTemplate.withBasicAuth("editor", "pass")
+            .postForEntity(uri, blankPost, BlankPost::class.java)
+        assertEquals(HttpStatus.CREATED, result.statusCode)
+
+        println("created post id: $result")
+        val postByIdUri = "$uri/${result.body?.id}/author"
+        testRestTemplate.withBasicAuth("editor", "pass").getForEntity(postByIdUri, BlankPost::class.java)
+        assertEquals(HttpStatus.OK, result.statusCode)
+    }
+*/
+
 }
+
+//    val testRestTemplateWithAuthorAuth = TestRestTemplate("author", "pass")
+//    var testRestTemplateWithClientOptions = TestRestTemplate("editor","pass", TestRestTemplate.HttpClientOption.ENABLE_COOKIES)     // ENABLE_REDIRECTS
+//    val uri = "/posts"
+//    val testRestTemplateWithEditorAuth = TestRestTemplate("editor", "pass")
+//
+//    @LocalServerPort
+//    var randomServerPort = 0
+//
+//    val baseUrl = "http://localhost:$randomServerPort/posts/"
+//    var baseUri: URI = URI(baseUrl)
