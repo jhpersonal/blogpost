@@ -3,7 +3,9 @@ server:
 spring:
    #Spring Security disable auto-configuration
    autoconfigure:
+      profiles: test
       exclude[0]: org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration
+
 
    # Spring JDBC configuration
    datasource:

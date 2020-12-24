@@ -40,15 +40,15 @@ class UserControllerTests {
 
     @Test
     fun authenticatedGetUser() {
-        val response = testRestTemplate.withBasicAuth("user", "secret")
-            .getForEntity(uri, String::class.java)
+        val response: ResponseEntity<User> = testRestTemplate.withBasicAuth("user", "secret")
+            .getForEntity(uri, User::class.java)
         println("get user: {$response}")
         assertThat(response.statusCode).isEqualTo(HttpStatus.OK)
     }
 
     @Test
     fun unauthenticatedUserController() {
-        val response = testRestTemplate.getForEntity(uri, User::class.java)
+        val response: ResponseEntity<User> = testRestTemplate.getForEntity(uri, User::class.java)
         assertThat(response.statusCode).isEqualTo(HttpStatus.OK)
     }
 }
