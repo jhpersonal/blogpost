@@ -15,9 +15,15 @@ data class User(
         var name: String = "",
         @Column(unique = true)
         var email: String = "",
-        @Column(nullable=false, length = 255)
+        @Column(nullable = false, length = 255)
         var password: String = "",
-        ) {
+        @ManyToMany
+        @JoinTable(
+                name = "users_roles",
+                joinColumns = [JoinColumn(name = "user_id", referencedColumnName = "id")],
+                inverseJoinColumns = [JoinColumn(name = "role_id", referencedColumnName = "id")] )
+        open val roles: List<Role> = mutableListOf()
+) {
         var createdAt: LocalDateTime = LocalDateTime.now()
         val updatedAt: LocalDateTime = LocalDateTime.now()
         @Id @GeneratedValue(strategy = GenerationType.AUTO)
