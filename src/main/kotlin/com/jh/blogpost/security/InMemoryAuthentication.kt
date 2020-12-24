@@ -6,10 +6,12 @@ import org.springframework.security.crypto.factory.PasswordEncoderFactories
 
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter
 import java.lang.Exception
 
 @Configuration
+@EnableWebSecurity
 class InMemoryAuthentication: WebSecurityConfigurerAdapter() {
 
     override fun configure(http: HttpSecurity) {
@@ -28,7 +30,6 @@ class InMemoryAuthentication: WebSecurityConfigurerAdapter() {
             .and()
             .csrf().disable()   // disable Spring Security built-in cross-site scripting protection.
             .formLogin().disable()  // disable default login form
-
 
         //NOTE: there’s no explicit logout with HTTP basic authentication. To force logout, you must exit the browser.
         // BCrypt is a strong hashing algorithm recommended by Spring Security.

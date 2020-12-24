@@ -1,6 +1,9 @@
 server:
    port: 9090
 spring:
+   autoconfigure:
+      exclude[0]: org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration
+
    # Spring JDBC configuration
    datasource:
       url: jdbc:postgresql://localhost:26257/blogpostdb
