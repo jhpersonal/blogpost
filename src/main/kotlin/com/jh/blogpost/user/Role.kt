@@ -3,7 +3,7 @@ package com.jh.blogpost.user
 import javax.persistence.*
 
 @Entity
-@Table(name = "roles")
+@Table(name = "'roles'")
 class Role(
     val name: String = "",
     @ManyToMany(mappedBy = "roles")
