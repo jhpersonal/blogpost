@@ -1,6 +1,5 @@
 package com.jh.blogpost.post
 
-import com.jh.blogpost.user.User
 import junit.framework.Assert.assertEquals
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Assert
