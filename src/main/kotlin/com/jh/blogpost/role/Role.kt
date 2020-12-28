@@ -1,9 +1,10 @@
-package com.jh.blogpost.user
+package com.jh.blogpost.role
 
+import com.jh.blogpost.user.User
 import javax.persistence.*
 
 @Entity
-@Table(name = "'roles'")
+@Table(name = "`roles`")
 class Role(
     val name: String = "",
     @ManyToMany(mappedBy = "roles")
@@ -12,5 +13,5 @@ class Role(
 {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-     val id: Long = 0
+     var id: Long = 0
 }

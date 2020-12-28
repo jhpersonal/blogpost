@@ -10,8 +10,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter
 import java.lang.Exception
 
-@Configuration
-@EnableWebSecurity
+//@Configuration
+//@EnableWebSecurity
 class InMemoryAuthentication: WebSecurityConfigurerAdapter() {
 
     override fun configure(http: HttpSecurity) {

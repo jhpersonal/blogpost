@@ -50,13 +50,13 @@ class UserController {
     @PutMapping("/users/{id}")
     fun updateUser(@PathVariable id: Long, @RequestBody user: User): User {
         var userDb: Optional<User> = userRepository.findById(id)
-
         if (!userDb.isPresent) throw Exception("Record not found with id: {user.id}")
-
-        val userUpdate: User = userDb.get()
-        userUpdate.name = user.name
-        userUpdate.email = user.email
-        return userRepository.save(userUpdate)
+        user.id = id
+        return userRepository.save(user)
+//        val userUpdate: User = userDb.get()
+//        userUpdate.name = user.name
+//        userUpdate.email = user.email
+//        return userRepository.save(userUpdate)
     }
 
     // Delete existing User by id

@@ -2,7 +2,7 @@ package com.jh.blogpost.post
 
 import com.jh.blogpost.user.User
 import com.jh.blogpost.user.UserRepository
-import com.jh.blogpost.user.UserService
+//import com.jh.blogpost.user.UserService
 import junit.framework.Assert
 import org.assertj.core.api.Assertions
 import org.assertj.core.api.Assertions.assertThat

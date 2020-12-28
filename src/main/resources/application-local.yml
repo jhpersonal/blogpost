@@ -1,10 +1,7 @@
 server:
    port: 9090
-spring:
-   autoconfigure:
-      exclude[0]: org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration
-
    # Spring JDBC configuration
+spring:
    datasource:
       url: jdbc:postgresql://localhost:26257/blogpostdb
       username: root
@@ -19,7 +16,9 @@ spring:
          # options: create, update, create-drop, validate, none
          # update: add columns, constraints but never remove a column or constraint that may have existed previously
          ddl-auto: create-drop
-
+   # Disable auto-configuration
+   autoconfigure:
+      exclude[0]: org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration
 #springdoc:
 ##   swagger-ui:
 ##      path: /swagger-ui
