@@ -36,16 +36,19 @@ class JpaAuthentication @Autowired constructor(private val userService: UserServ
             .antMatchers("/actuator/**", "/v3/api-docs/**", "/configuration/**", "/swagger*/**", "/webjars/**").permitAll()
             .anyRequest().authenticated()
             .and()
-            .sessionManagement()
-            .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-            .and()
             .formLogin().permitAll()
-            .and().logout().logoutRequestMatcher(AntPathRequestMatcher("/logout"))
+//            .and().logout().logoutRequestMatcher(AntPathRequestMatcher("/logout"))
             .and()
             .httpBasic()
-            .and()
-            .csrf()
-            .disable()
+
+
+//            .and()
+//            .csrf()
+//            .disable()
+
+        //            .sessionManagement()
+//            .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+//            .and()
 
     }
 

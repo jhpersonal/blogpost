@@ -9,6 +9,7 @@ import javax.persistence.GenerationType
 import javax.persistence.Id
 import javax.persistence.*
 import javax.validation.constraints.Email
+import javax.validation.constraints.NotBlank
 import javax.validation.constraints.NotEmpty
 import javax.validation.constraints.NotNull
 
@@ -20,12 +21,11 @@ data class User(
         val name: String = "",
 
         @Column(unique = true)
-//        @Email
+        @Email
         var email: String = "",
 
 //        @Length(min = 5, message = "*Password must have at least 5 characters")
-//        @NotEmpty(message = "*Please provide your password")
-//        @NotNull(message = "*Password is required")
+        @NotBlank(message = "Password is mandatory")
         @Column(nullable = false, length = 255)
         val password: String = "",
 
