@@ -1,17 +1,20 @@
 package com.jh.blogpost.role
 
 import com.jh.blogpost.user.User
+import org.springframework.security.core.GrantedAuthority
 import javax.persistence.*
 
 @Entity
-@Table(name = "`roles`")
+@Table(name = "role")
 class Role(
-    val name: String = "",
-    @ManyToMany(mappedBy = "roles")
-    val users: Collection<User>
-)
+    @Column(unique = true, nullable = false)
+    val name: String = ""
+): GrantedAuthority
 {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
      var id: Long = 0
+    override fun getAuthority() = name
 }
+
+

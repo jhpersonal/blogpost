@@ -1,44 +1,28 @@
-package com.jh.blogpost.user
+package com.jh.blogpost.security
 
-import com.jh.blogpost.role.Role
+import com.jh.blogpost.user.UserRepository
 import org.hibernate.annotations.common.util.impl.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.security.core.userdetails.User
 import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.stereotype.Service
 import org.springframework.security.core.userdetails.UsernameNotFoundException
-
 import org.springframework.security.core.userdetails.UserDetails
-import org.springframework.security.core.authority.SimpleGrantedAuthority
-
-import java.util.ArrayList
-
-import org.springframework.security.core.GrantedAuthority
+import org.springframework.security.crypto.factory.PasswordEncoderFactories
 
 
 @Service
-class UserService(): UserDetailsService {
+class JpaUserDetailsService(): UserDetailsService {
 
     @Autowired
     lateinit var userRepository: UserRepository
-    private val log = LoggerFactory.logger(UserService::class.java)
+    private val log = LoggerFactory.logger(JpaUserDetailsService::class.java)
 
     @Throws(UsernameNotFoundException::class)
     override fun loadUserByUsername(email: String): UserDetails {
-        val user = userRepository.findByEmail(email) ?: throw UsernameNotFoundException(email)
-        return User(user.email, user.password, getAuthorities(user.roles))
-    }
+//        val encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder()
+//        println(encoder.encode("password"))
+        return  userRepository.findByEmail(email) ?: throw UsernameNotFoundException(email)
 
-    fun getAuthorities(roles: List<Role>?): Collection<GrantedAuthority> {
-        val authorities = ArrayList<GrantedAuthority>()
-        roles!!.forEach { role -> authorities.add(SimpleGrantedAuthority(role.name)) }
-        return authorities
-
-//        return roles.stream().map { role ->
-//                log.debug("Granting Authority to user with role: $role")
-//                SimpleGrantedAuthority(role.name)
-//            }
-//            .collect(Collectors.toList())
     }
 
 }

@@ -2,6 +2,7 @@ package com.jh.blogpost.security
 
 import org.springframework.context.annotation.Configuration
 import org.springframework.http.HttpMethod
+import org.springframework.http.HttpMethod.*
 import org.springframework.security.crypto.factory.PasswordEncoderFactories
 
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder
@@ -19,17 +20,18 @@ class InMemoryAuthentication: WebSecurityConfigurerAdapter() {
         http.httpBasic()
             .and()
             .authorizeRequests()
-            .antMatchers("/v3/api-docs", "/configuration/**", "/swagger*/**", "/webjars/**").permitAll()
-            .antMatchers(HttpMethod.GET, "/posts/{id}/author").hasRole("EDITOR")
-            .antMatchers(HttpMethod.DELETE, "/posts/{id}").hasRole("EDITOR")
-            .antMatchers(HttpMethod.GET,"/posts").hasAnyRole("EDITOR", "AUTHOR")               // (HttpMethod.GET, "/", "/publication").permitAll()
-            .antMatchers(HttpMethod.POST, "/posts").hasAnyRole("EDITOR","AUTHOR")
+                .antMatchers("/v3/api-docs", "/configuration/**", "/swagger*/**", "/webjars/**").permitAll()
+                .antMatchers(GET, "/posts/{id}/author").hasRole("EDITOR")
+                .antMatchers(DELETE, "/posts/{id}").hasRole("EDITOR")
+                .antMatchers(GET,"/posts").hasAnyRole("EDITOR", "AUTHOR")               // (HttpMethod.GET, "/", "/publication").permitAll()
+                .antMatchers(POST, "/posts").hasAnyRole("EDITOR","AUTHOR")
                             // role-based authorization
-            .anyRequest().authenticated()    //.permitAll()
+                .anyRequest().authenticated()    //.permitAll()
 //            .and().logout().permitAll().logoutRequestMatcher( AntPathRequestMatcher("/logout", HttpMethod.GET.toString())).invalidateHttpSession(true)
             .and()
             .csrf().disable()   // disable Spring Security built-in cross-site scripting protection.
             .formLogin().disable()  // disable default login form
+            .logout().disable()
 
         //NOTE: there’s no explicit logout with HTTP basic authentication. To force logout, you must exit the browser.
         // BCrypt is a strong hashing algorithm recommended by Spring Security.

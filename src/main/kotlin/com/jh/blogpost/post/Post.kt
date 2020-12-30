@@ -9,7 +9,7 @@ import java.time.LocalDateTime
 import javax.persistence.*
 
 
-@Entity(name = "posts")
+@Entity(name = "post")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "type")
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")

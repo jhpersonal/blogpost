@@ -14,7 +14,7 @@ import javax.persistence.Id
 import javax.persistence.*
 
 @Entity
-@Table(name="`publications`")
+@Table(name="`publication`")
 data class Publication(
     @ManyToOne   // @ManyToOne annotation to declare that it has a many-to-one relationship with the Post entity.
     @JoinColumn(name = "post_id", nullable = false)     // @JoinColumn annotation to declare the foreign key column.

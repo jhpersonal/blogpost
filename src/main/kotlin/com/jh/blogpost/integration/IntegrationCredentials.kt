@@ -3,7 +3,7 @@ package com.jh.blogpost.integration
 import javax.persistence.*
 
 @Entity
-@Table(name="integration_credentials")
+@Table(name="integration_credential")
 data class IntegrationCredentials(
     @Column(unique = true, length=100, nullable=false)
     val username: String = "",
