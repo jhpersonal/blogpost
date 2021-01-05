@@ -1,27 +1,18 @@
 package com.jh.blogpost.publication
 
-import com.jh.blogpost.integratio.Integration
-import com.jh.blogpost.integratio.Integration_Type
 import com.jh.blogpost.integration.IntegrationCredentials
 import com.jh.blogpost.integration.IntegrationCredentialsRepository
-import com.jh.blogpost.integration.IntegrationRepository
 import com.jh.blogpost.post.BlogPost
-import com.jh.blogpost.post.Post
 import com.jh.blogpost.post.PostRepository
 import com.jh.blogpost.user.User
 import com.jh.blogpost.user.UserRepository
 import org.assertj.core.api.Assertions
-import org.junit.After
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
-import org.junit.jupiter.api.BeforeAll
-import org.junit.jupiter.api.BeforeEach
 import org.junit.runner.RunWith
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
-import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.junit4.SpringRunner
 import java.util.*
 

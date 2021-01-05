@@ -2,7 +2,6 @@ package com.jh.blogpost.post
 
 import com.jh.blogpost.user.User
 import junit.framework.Assert.assertEquals
-import net.bytebuddy.agent.VirtualMachine
 import org.springframework.boot.test.web.client.TestRestTemplate
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment
@@ -10,17 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.junit4.SpringRunner
 
 import org.junit.runner.RunWith
-import net.bytebuddy.agent.VirtualMachine.ForHotSpot.Connection.ForJnaWindowsNamedPipe.Factory.LIBRARY_NAME
 import org.junit.Test
-import org.springframework.boot.test.web.client.postForEntity
-
-
-import org.springframework.http.ResponseEntity
-
-import org.springframework.http.HttpEntity
-
-
-
 
 
 @RunWith(SpringRunner::class)

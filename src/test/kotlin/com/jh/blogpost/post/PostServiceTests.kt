@@ -3,20 +3,13 @@ package com.jh.blogpost.post
 import com.jh.blogpost.user.User
 import com.jh.blogpost.user.UserRepository
 //import com.jh.blogpost.user.UserService
-import junit.framework.Assert
-import org.assertj.core.api.Assertions
 import org.assertj.core.api.Assertions.assertThat
-import org.assertj.core.api.JUnitSoftAssertions
-import org.junit.Before
 
-import org.junit.Rule
 import org.junit.Test
-import org.junit.jupiter.api.AfterAll
 import org.junit.jupiter.api.BeforeAll
 import org.junit.runner.RunWith
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.junit4.SpringRunner
 

@@ -6,7 +6,7 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource
 import org.springframework.stereotype.Repository
 
 //@Repository
-@RepositoryRestResource(collectionResourceRel = "publication", path="publication")
+//@RepositoryRestResource(collectionResourceRel = "publication", path="publication")
 interface PublicationRepository: JpaRepository<Publication, Long> {
     fun findByPublicationPost(publicationPost: Post): List<Publication>
 

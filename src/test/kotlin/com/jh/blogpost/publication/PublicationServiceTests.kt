@@ -6,8 +6,6 @@ import com.jh.blogpost.post.BlogPost
 import com.jh.blogpost.post.PostRepository
 import com.jh.blogpost.user.User
 import com.jh.blogpost.user.UserRepository
-import org.assertj.core.api.Assertions
-import org.junit.Assert
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.springframework.beans.factory.annotation.Autowired

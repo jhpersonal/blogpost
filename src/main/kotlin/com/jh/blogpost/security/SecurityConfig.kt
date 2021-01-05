@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.http.HttpMethod
+import org.springframework.http.HttpMethod.*
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
@@ -43,16 +44,16 @@ class SecurityConfig(private val userService: JpaUserDetailsService) : WebSecuri
         http
             .authorizeRequests()
             .antMatchers("/actuator/**", "/v3/api-docs/**", "/configuration/**", "/swagger*/**", "/webjars/**").permitAll()
-            .antMatchers(HttpMethod.GET, "/posts/{id}/author").hasRole("EDITOR")
-            .antMatchers(HttpMethod.DELETE, "/posts/{id}").hasRole("EDITOR")
-            .antMatchers(HttpMethod.GET,"/posts").hasAnyRole("EDITOR", "AUTHOR")               // (HttpMethod.GET, "/", "/publication").permitAll()
-            .antMatchers(HttpMethod.POST, "/posts").hasAnyRole("EDITOR","AUTHOR")
+            .antMatchers(GET, "/posts/{id}/author").hasAuthority("EDITOR")
+            .antMatchers(DELETE, "/posts/{id}").hasAuthority("EDITOR")
+            .antMatchers(GET,"/posts").hasAnyAuthority("EDITOR", "AUTHOR")               // (HttpMethod.GET, "/", "/publication").permitAll()
+            .antMatchers(POST, "/posts").hasAnyAuthority("EDITOR","AUTHOR")
             .anyRequest().authenticated()
             .and()
             .formLogin()
                 .defaultSuccessUrl("/")
                 .permitAll()
-                .failureUrl("/login?error")
+//                .failureUrl("/login?error")
                 .and()
             .logout()
                 .logoutRequestMatcher(AntPathRequestMatcher("/logout"))
@@ -60,9 +61,9 @@ class SecurityConfig(private val userService: JpaUserDetailsService) : WebSecuri
                 .invalidateHttpSession(true)
                 .deleteCookies("JSESSIONID")
                 .and()
-            .exceptionHandling()
-                .accessDeniedPage("/403")
-                .and()
+//            .exceptionHandling()
+//                .accessDeniedPage("/403")
+//                .and()
             .httpBasic()
 
 
