@@ -11,7 +11,7 @@ import org.springframework.data.jpa.repository.Query
 import java.time.LocalDateTime
 import java.util.*
 
-//@RepositoryRestResource(collectionResourceRel = "posts", path="posts")
+@RepositoryRestResource(collectionResourceRel = "posts", path="posts")
 //@Repository
 interface PostRepository : JpaRepository <Post, Long> {
     fun findByAuthor(author: User): List<Post>

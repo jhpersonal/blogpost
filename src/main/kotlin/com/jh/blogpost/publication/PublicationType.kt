@@ -1,8 +1,8 @@
 package com.jh.blogpost.publication
 
-import com.jh.blogpost.Publisher.PostPublisher
-import com.jh.blogpost.post.Post
+import com.jh.blogpost.postpublisher.PostPublisher
 
+/*
 enum class PublicationType: PostPublisher {
 //    LOCAL, FACEBOOK, TWITTER
     LOCAL {
@@ -14,4 +14,4 @@ enum class PublicationType: PostPublisher {
     Twitter {
         override fun printTitle(title: String) { println("Twitter: $title")  }
     }
-}
+}*/

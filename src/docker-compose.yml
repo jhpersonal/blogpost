@@ -1,0 +1,23 @@
+#This is docker-compose for running DB for app, which runs from idea:
+#- Connection URL:  jdbc:postgresql://localhost:26257/cockroach username root no password
+
+version: "3.2"
+services:
+
+  node_1:
+    container_name: node_1
+    image: cockroachdb/cockroach:latest
+    volumes:
+      - ./data/node_1:/cockroach/cockroach-data
+    command:  start-single-node --insecure
+    ports:
+      - "26257:26257"
+      - "8080:8080"
+    networks:
+      cockroachdb_net:
+        aliases:
+          - node_1
+
+networks:
+  cockroachdb_net:
+    driver: bridge

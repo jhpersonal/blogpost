@@ -1,25 +1,32 @@
 server:
    port: 9090
    # Spring JDBC configuration
+
+app:
+   authentication:
+      provider: JPA  # JPA / KEYCLOAK
+
 spring:
+
    datasource:
       url: jdbc:postgresql://localhost:26257/blogpostdb
       username: root
       password:
 #      initialization-mode: always   # Initialize the database using data.sql script
+
    # Spring Data JPA configuration
    jpa:
       generate-ddl: true
       # Log JPA queries
       show-sql: true
       hibernate:
-         # To be updated in real production usage
-         # options: create, update, create-drop, validate, none
-         # update: add columns, constraints but never remove a column or constraint that may have existed previously
+         # options: create, update, create-drop, validate, none     # update: add columns, constraints but never remove a column or constraint that may have existed previously
          ddl-auto: update
+
    # Disable auto-configuration
    autoconfigure:
       exclude[0]: org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration
+
 ##   swagger-ui:
 ##      path: /swagger-ui
 #   api-docs:

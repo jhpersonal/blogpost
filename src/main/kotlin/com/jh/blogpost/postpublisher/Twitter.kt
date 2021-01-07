@@ -1,7 +1,6 @@
-package com.jh.blogpost.Publisher
+package com.jh.blogpost.postpublisher
 
-import com.jh.blogpost.post.Post
-
+/*
 class Twitter: PostPublisher {
 //    override fun printTitle(postTitle: String) {
 //        println("Twitter: $postTitle")
@@ -10,4 +9,4 @@ class Twitter: PostPublisher {
     override fun printTitle(postTitle: String) {
         println("Twitter: $postTitle")
     }
-}
+}*/

@@ -1,10 +1,8 @@
 package com.jh.blogpost.publication
 
-import com.jh.blogpost.integratio.Integration
-import com.jh.blogpost.integratio.Integration_Type
+import com.jh.blogpost.integration.Integration
 import com.jh.blogpost.integration.IntegrationCredentials
 import com.jh.blogpost.post.Post
-import com.jh.blogpost.user.User
 import org.hibernate.annotations.CreationTimestamp
 import org.hibernate.annotations.UpdateTimestamp
 import java.time.LocalDateTime
@@ -14,16 +12,13 @@ import javax.persistence.Id
 import javax.persistence.*
 
 @Entity
-@Table(name="`publication`")
+@DiscriminatorColumn(name="type")
 data class Publication(
     @ManyToOne   // @ManyToOne annotation to declare that it has a many-to-one relationship with the Post entity.
-    @JoinColumn(name = "post_id", nullable = false)     // @JoinColumn annotation to declare the foreign key column.
-    var publicationPost: Post,
+    val post: Post,
     @ManyToOne   // @ManyToOne annotation to declare that it has a many-to-one relationship with the IntegrationCredentials entity.
-    @JoinColumn(name = "integration_credentials_id", nullable = false)     // @JoinColumn annotation to declare the foreign key column.
-    var integrationCredentials: IntegrationCredentials,
-    @Enumerated(EnumType.STRING)
-    val type: PublicationType = PublicationType.LOCAL
+//    @JoinColumn(name = "integration_credentials_id", nullable = false)     // @JoinColumn annotation to declare the foreign key column.
+    val integration: Integration
 
 ) {
     @Id @GeneratedValue(strategy = GenerationType.AUTO)

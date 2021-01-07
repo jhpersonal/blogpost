@@ -13,6 +13,7 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.junit4.SpringRunner
 
+/*
 @RunWith(SpringRunner::class)
 @SpringBootTest
 @AutoConfigureTestDatabase
@@ -44,3 +45,5 @@ class PublicationServiceTests {
 //        Assert.assertNotNull(publicationRequest)
     }
 }
+
+ */

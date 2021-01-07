@@ -3,6 +3,7 @@ package com.jh.blogpost.security
 import com.jh.blogpost.user.UserRepository
 import org.hibernate.annotations.common.util.impl.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty
 import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.stereotype.Service
 import org.springframework.security.core.userdetails.UsernameNotFoundException
@@ -11,6 +12,7 @@ import org.springframework.security.crypto.factory.PasswordEncoderFactories
 
 
 @Service
+//@ConditionalOnProperty(prefix="app.authentication.provider", value=["JPA"])
 class JpaUserDetailsService(): UserDetailsService {
 
     @Autowired

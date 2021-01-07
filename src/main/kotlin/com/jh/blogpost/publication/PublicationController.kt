@@ -1,5 +1,43 @@
 package com.jh.blogpost.publication
 
+import com.jh.blogpost.postpublisher.PostPublisherService
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.RestController
+
+
+@RestController
+class PublicationController {
+    @Autowired
+    lateinit var postPublisherService: PostPublisherService
+    @Autowired
+    lateinit var publicationRepository: PublicationRepository
+
+    @PostMapping("/publish")
+    fun publish(@RequestBody requests: List<Long>){
+        requests.forEach {
+            val publication = publicationRepository.findById(it)
+            if(publication.isPresent) {
+                postPublisherService.publish(publication.get())
+            }
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
 import com.jh.blogpost.integration.IntegrationCredentials
 import com.jh.blogpost.post.Post
 import org.springframework.beans.factory.annotation.Autowired
@@ -35,4 +73,4 @@ class PublicationController {
     }
 
 
-}
+}*/

@@ -7,6 +7,7 @@ import org.springframework.data.repository.findByIdOrNull
 import org.springframework.data.rest.webmvc.ResourceNotFoundException
 import org.springframework.stereotype.Service
 
+/*
 @Service
 class PublicationService {
     @Autowired
@@ -37,4 +38,4 @@ class PublicationService {
     }
 
 
-}
+}*/

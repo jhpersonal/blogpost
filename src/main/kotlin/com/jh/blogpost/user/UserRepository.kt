@@ -4,7 +4,7 @@ import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.rest.core.annotation.RepositoryRestResource
 
 //@Repository
-//@RepositoryRestResource(collectionResourceRel = "users", path="users")
+@RepositoryRestResource(collectionResourceRel = "users", path="users")
 interface UserRepository : JpaRepository <User, Long> {
     fun findByEmail(email: String): User?
     fun findByName(name: String): List<User>

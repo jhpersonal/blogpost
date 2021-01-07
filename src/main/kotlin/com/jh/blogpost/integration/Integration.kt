@@ -1,22 +1,29 @@
-package com.jh.blogpost.integratio
+package com.jh.blogpost.integration
 
+import com.fasterxml.jackson.annotation.JsonSubTypes
+import com.fasterxml.jackson.annotation.JsonTypeInfo
+import com.jh.blogpost.facebook.FacebookIntegration
+import com.jh.blogpost.facebook.LocalIntegration
+import com.jh.blogpost.facebook.TwitterIntegration
 import com.jh.blogpost.integration.IntegrationCredentials
 import javax.persistence.*
 
 @Entity
-@Table(name="integration")
-data class Integration(
-    var name: String = "",
-    @Enumerated(EnumType.STRING)
-    val type: Integration_Type,
-    @ManyToOne   // @ManyToOne annotation to declare that it has a many-to-one relationship with the IntegrationCredentials entity.
-    @JoinColumn(name = "integration_id", nullable = false)     // @JoinColumn annotation to declare the foreign key column.
-    var integrationCredentials: IntegrationCredentials,
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "type")
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
+@JsonSubTypes(
+    JsonSubTypes.Type(name = "facebook", value= FacebookIntegration::class),
+    JsonSubTypes.Type(name = "twitter", value= TwitterIntegration::class),
+    JsonSubTypes.Type(name = "local", value= LocalIntegration::class)
+)
+open class Integration(
+    open var name: String = "",
+    @OneToOne   // @OneToOne annotation to declare that it has a one-to-one relationship with the IntegrationCredentials entity.
+    open var integrationCredentials: IntegrationCredentials,
+
+) {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    var id: Long = 0
-)
-
-enum class Integration_Type {
-    Facebook, Twitter, Local, linkedin
+    open var id: Long = 0
 }
