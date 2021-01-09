@@ -1,12 +1,13 @@
 package com.jh.blogpost
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
+import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration
 import org.springframework.boot.runApplication
 
+//@SpringBootApplication(exclude = [SecurityAutoConfiguration::class])
 @SpringBootApplication
 class BlogpostApplication
 
 fun main(args: Array<String>) {
     runApplication<BlogpostApplication>(*args)
-//    SpringApplication.run(InMemoryAuthApplication::class.java, args)
 }
