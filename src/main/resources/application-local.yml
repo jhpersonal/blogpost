@@ -1,13 +1,12 @@
 server:
    port: 9090
-   # Spring JDBC configuration
 
 app:
    authentication:
       provider: JPA  # JPA / KEYCLOAK
 
 spring:
-
+   # Spring JDBC configuration
    datasource:
       url: jdbc:postgresql://localhost:26257/blogpostdb
       username: root

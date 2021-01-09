@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
 
-
 @RestController
 class PublicationController {
     @Autowired
@@ -15,14 +14,10 @@ class PublicationController {
     lateinit var publicationRepository: PublicationRepository
 
     @PostMapping("/publish")
-    fun publish(@RequestBody requests: List<Long>){
-        requests.forEach {
+    fun publish(@RequestBody publications: List<Long>) = publications.forEach {
             val publication = publicationRepository.findById(it)
-            if(publication.isPresent) {
-                postPublisherService.publish(publication.get())
-            }
+            if(publication.isPresent) postPublisherService.publish(publication.get())
         }
-    }
 }
 
 
