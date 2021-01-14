@@ -6,6 +6,6 @@ import org.springframework.stereotype.Service
 @Service
 class TwitterService {
     fun printTitle(postTitle: String, integration: Integration){
-        println("Twitter: Post $postTitle")
+        println("Twitter Post: $postTitle")
     }
 }

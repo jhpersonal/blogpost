@@ -12,7 +12,7 @@ class FacebookPostPublisher: PostPublisher {
     lateinit var facebookService: FacebookService
 
     override fun supports(publication: Publication): Boolean {
-        return publication.integration is LocalIntegration
+        return publication.integration is FacebookIntegration
     }
 
     override fun publish(publication: Publication) {

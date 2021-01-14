@@ -11,7 +11,7 @@ class TwitterPostPublisher: PostPublisher {
     lateinit var twitterService: TwitterService
 
     override fun supports(publication: Publication): Boolean {
-        return publication.integration is LocalIntegration
+        return publication.integration is TwitterIntegration
     }
 
     override fun publish(publication: Publication) {
