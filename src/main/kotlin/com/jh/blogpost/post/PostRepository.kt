@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository
 import java.sql.Time
 import org.springframework.data.domain.Pageable
 import org.springframework.data.jpa.repository.Query
+import org.springframework.data.repository.CrudRepository
 import java.time.LocalDateTime
 import java.util.*
 

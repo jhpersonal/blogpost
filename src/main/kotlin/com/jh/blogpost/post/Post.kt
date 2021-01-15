@@ -5,10 +5,11 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo
 import com.jh.blogpost.user.User
 import org.hibernate.annotations.CreationTimestamp
 import org.hibernate.annotations.UpdateTimestamp
+import org.springframework.data.rest.core.annotation.RestResource
 import java.time.LocalDateTime
 import javax.persistence.*
 
-
+@RestResource(path="posts")
 @Entity(name = "post")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "type")

@@ -4,8 +4,10 @@ import com.fasterxml.jackson.annotation.JsonSubTypes
 import com.fasterxml.jackson.annotation.JsonTypeInfo
 import com.jh.blogpost.facebook.FacebookCredentials
 import com.jh.blogpost.facebook.LocalCredentials
+import org.springframework.data.rest.core.annotation.RestResource
 import javax.persistence.*
 
+@RestResource(path="integrationCredentials")
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "type")

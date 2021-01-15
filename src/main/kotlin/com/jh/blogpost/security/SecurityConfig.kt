@@ -1,20 +1,26 @@
 package com.jh.blogpost.security
 
+import org.springframework.beans.factory.annotation.Qualifier
+import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.context.annotation.Profile
 import org.springframework.http.HttpMethod.*
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter
+import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher
 
+@Profile("local")
+@EnableConfigurationProperties
 @Configuration
 @EnableWebSecurity
-class SecurityConfig(private val userService: JpaUserDetailsService) : WebSecurityConfigurerAdapter() {
+class SecurityConfig(private val userService: AuthenticationProvider) : WebSecurityConfigurerAdapter() {
     @Bean
     override fun authenticationManager(): AuthenticationManager {
         return super.authenticationManager()
@@ -44,11 +50,11 @@ class SecurityConfig(private val userService: JpaUserDetailsService) : WebSecuri
             .antMatchers(POST, "/posts").hasAnyRole("EDITOR","AUTHOR")
             .anyRequest().authenticated()
             .and()
-//            .formLogin()
+            .formLogin()
 //                .defaultSuccessUrl("/")
-//                .permitAll()
+                .permitAll()
 ////                .failureUrl("/login?error")
-//                .and()
+                .and()
 //            .logout()
 //                .logoutRequestMatcher(AntPathRequestMatcher("/logout"))
 //                .logoutSuccessUrl("/login")

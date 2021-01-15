@@ -6,8 +6,10 @@ import com.jh.blogpost.facebook.FacebookIntegration
 import com.jh.blogpost.facebook.LocalIntegration
 import com.jh.blogpost.facebook.TwitterIntegration
 import com.jh.blogpost.integration.IntegrationCredentials
+import org.springframework.data.rest.core.annotation.RestResource
 import javax.persistence.*
 
+@RestResource(path="integrations")
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "type")

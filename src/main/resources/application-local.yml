@@ -1,9 +1,10 @@
 server:
    port: 9090
+#debug: true
 
 app:
    authentication:
-      provider: JPA  # JPA / KEYCLOAK
+      provider: KEYCLOAK  # JPA / KEYCLOAK
 
 spring:
    # Spring JDBC configuration
@@ -18,19 +19,27 @@ spring:
       generate-ddl: true
       # Log JPA queries
       show-sql: true
+      format-sql : true
       hibernate:
          # options: create, update, create-drop, validate, none     # update: add columns, constraints but never remove a column or constraint that may have existed previously
-         ddl-auto: update
+         ddl-auto: none
 
    # Disable auto-configuration
    autoconfigure:
       exclude[0]: org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration
 
+   logging:
+      level:
+         org.springframework.context: DEBUG
+         com.jh.blogpost.context: DEBUG
+         #    org.hibernate: DEBUG
+
+
 ##   swagger-ui:
 ##      path: /swagger-ui
 #   api-docs:
 #      path: /api-docs
-#spring.jpa.hibernate.naming.strategy.physical-startegy
+# spring.jpa.hibernate.naming.strategy.physical-startegy
 
 
 

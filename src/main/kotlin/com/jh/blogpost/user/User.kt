@@ -2,6 +2,7 @@ package com.jh.blogpost.user
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.jh.blogpost.role.Role
+import org.springframework.data.rest.core.annotation.RestResource
 import org.springframework.security.core.userdetails.UserDetails
 import java.time.LocalDateTime
 import javax.persistence.Entity
