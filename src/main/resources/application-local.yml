@@ -4,7 +4,7 @@ server:
 
 app:
    authentication:
-      provider: KEYCLOAK  # JPA / KEYCLOAK
+      provider: JPA  # JPA / KEYCLOAK
 
 spring:
    # Spring JDBC configuration

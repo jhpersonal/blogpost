@@ -9,14 +9,16 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException
 import org.springframework.stereotype.Service
 
 
-@ConditionalOnProperty(prefix="app.authentication.provider", value=["KEYCLOAK"])
+//@ConditionalOnProperty(prefix="app.authentication.provider", value=["KEYCLOAK"])
+@ConditionalOnProperty(name = ["app.authentication.provider"], havingValue="KEYCLOAK", matchIfMissing=true)
 @Service
 class KeyCloakUserDetailsService: AuthenticationProvider {
     @Autowired
     lateinit var userRepository: UserRepository
 
     override fun loadUserByUsername(email: String): UserDetails {
-        return userRepository.findByEmail("editor.mt.com") ?: throw UsernameNotFoundException(email)
+        return userRepository.findAll().first() ?: throw UsernameNotFoundException(email)
+//        return userRepository.findByEmail("editor.mt.com") ?: throw UsernameNotFoundException(email)
 //        return userRepository.findByEmail(email) ?: throw UsernameNotFoundException(email)
     }
 

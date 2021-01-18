@@ -16,8 +16,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher
 
-@Profile("local")
-@EnableConfigurationProperties
+
 @Configuration
 @EnableWebSecurity
 class SecurityConfig(private val userService: AuthenticationProvider) : WebSecurityConfigurerAdapter() {
@@ -33,7 +32,6 @@ class SecurityConfig(private val userService: AuthenticationProvider) : WebSecur
     }
 
     override fun configure(auth: AuthenticationManagerBuilder) {
-
         auth.userDetailsService(userService)
             .passwordEncoder(encoder())
     }
@@ -50,11 +48,15 @@ class SecurityConfig(private val userService: AuthenticationProvider) : WebSecur
             .antMatchers(POST, "/posts").hasAnyRole("EDITOR","AUTHOR")
             .anyRequest().authenticated()
             .and()
-            .formLogin()
+            .httpBasic()
+            .and()
+            .csrf().disable()
+            .formLogin().permitAll().and().logout().permitAll()
+//            .formLogin()
 //                .defaultSuccessUrl("/")
-                .permitAll()
+//                .permitAll()
 ////                .failureUrl("/login?error")
-                .and()
+//                .and()
 //            .logout()
 //                .logoutRequestMatcher(AntPathRequestMatcher("/logout"))
 //                .logoutSuccessUrl("/login")
@@ -64,10 +66,7 @@ class SecurityConfig(private val userService: AuthenticationProvider) : WebSecur
 //            .exceptionHandling()
 //                .accessDeniedPage("/403")
 //                .and()
-            .httpBasic()
-            .and()
-                .csrf()
-                .disable()
+
 
         //            .sessionManagement()
 //            .sessionCreationPolicy(SessionCreationPolicy.STATELESS)

@@ -11,7 +11,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.crypto.factory.PasswordEncoderFactories
 
-@ConditionalOnProperty(prefix="app.authentication.provider", value=["JPA"], matchIfMissing=true)
+@ConditionalOnProperty(name = ["app.authentication.provider"], havingValue="JPA", matchIfMissing=true)
 @Service
 class JpaUserDetailsService: AuthenticationProvider {
 
