@@ -1,7 +1,12 @@
 package com.jh.blogpost.publication
 
+import com.jh.blogpost.facebook.FacebookCredentials
+import com.jh.blogpost.facebook.FacebookIntegration
+import com.jh.blogpost.facebook.TwitterCredentials
+import com.jh.blogpost.facebook.TwitterIntegration
 import com.jh.blogpost.integration.IntegrationCredentials
 import com.jh.blogpost.integration.IntegrationCredentialsRepository
+import com.jh.blogpost.integration.IntegrationRepository
 import com.jh.blogpost.post.BlogPost
 import com.jh.blogpost.post.PostRepository
 import com.jh.blogpost.user.User
@@ -15,7 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
 import org.springframework.test.context.junit4.SpringRunner
 import java.util.*
-/*
+
 //@SpringBootTest
 //@AutoConfigureTestDatabase
 @RunWith(SpringRunner::class)
@@ -23,8 +28,8 @@ import java.util.*
 class PublicationRepositoryTests {
     @Autowired
     lateinit var publicationRepository: PublicationRepository
-//    @Autowired
-//    lateinit var integrationRepository: IntegrationRepository
+    @Autowired
+    lateinit var integrationRepository: IntegrationRepository
     @Autowired
     lateinit var integrationCredentialsRepository: IntegrationCredentialsRepository
     @Autowired
@@ -37,11 +42,11 @@ class PublicationRepositoryTests {
     internal fun setUp() {
         val user: User = userRepository.save(User("Sparkle", "sparkle@test.com"))
         val post: BlogPost = postRepository.save(BlogPost("orig_title", "original content", user))
-
         //integration creds save
-        val integrationCreds: IntegrationCredentials = integrationCredentialsRepository.save(IntegrationCredentials("testuser", "testpassword"))
-        // Publication save
-        publicationRepository.save(Publication(post, integrationCreds, PublicationType.FACEBOOK))
+        val integrationCred: TwitterCredentials = integrationCredentialsRepository.save(TwitterCredentials("testuser", "testpassword"))
+        val integration: TwitterIntegration = integrationRepository.save(TwitterIntegration("integrate with twitter test", integrationCred))
+//      Publication save
+       publicationRepository.save(Publication(post, integration))
     }
 
     @Test
@@ -53,16 +58,16 @@ class PublicationRepositoryTests {
         Assertions.assertThat(publications).size().isNotZero;
     }
 
-    @Test
-    fun testFindByPublicationPost() {
-//      when
-        val publications: List<Publication> = publicationRepository.findAll()
-        val publication: Publication = publications.first()
-        val postSearch: List<Publication> = publicationRepository.findByPublicationPost(publication.publicationPost)
-        //then
-        Assert.assertNotNull(postSearch)
-        Assertions.assertThat(postSearch).size().isNotZero;
-    }
+//    @Test
+//    fun testFindByPublicationPost() {
+////      when
+//        val publications: List<Publication> = publicationRepository.findAll()
+//        val publication: Publication = publications.first()
+//        val postSearch: List<Publication> = publicationRepository.findByPublicationPost(publication.publicationPost)
+//        //then
+//        Assert.assertNotNull(postSearch)
+//        Assertions.assertThat(postSearch).size().isNotZero;
+//    }
 
     @Test
     fun testCreatePublication() {
@@ -70,13 +75,14 @@ class PublicationRepositoryTests {
         val user: User = userRepository.save(User("Starlight", "startlight@test.com"))
         val post: BlogPost = postRepository.save(BlogPost("create_title", "create content", user))
 //        integration creds save
-        val integrationCreds: IntegrationCredentials = integrationCredentialsRepository.save(IntegrationCredentials("fbUser", "fbPassword"))
+        val integrationCred: FacebookCredentials = integrationCredentialsRepository.save(FacebookCredentials("fbUser", "fbPassword"))
+
+        val integration: FacebookIntegration = integrationRepository.save(FacebookIntegration("integrate with facebook", integrationCred))
 //      Publication save
-        publicationRepository.save(
-            Publication(post, integrationCreds, PublicationType.FACEBOOK))
+        val publication = publicationRepository.save(Publication(post, integration))
 //        then
-        Assert.assertNotNull(user)
-        Assert.assertEquals(user.email, "startlight@test.com")
+        Assert.assertNotNull(publication)
+//        Assert.assertEquals(user.email, "startlight@test.com")
     }
 
     @Test
@@ -85,9 +91,10 @@ class PublicationRepositoryTests {
         val user: User = userRepository.save(User("Glimmer", "glimmer@test.com"))
         val post: BlogPost = postRepository.save(BlogPost("create_new_title", "create new content", user))
 //        integration creds save
-        val integrationCreds: IntegrationCredentials = integrationCredentialsRepository.save(IntegrationCredentials("tw_user", "twPassword"))
+        val integrationCred: TwitterCredentials = integrationCredentialsRepository.save(TwitterCredentials("tw_user", "twPassword"))
+        val integration: TwitterIntegration = integrationRepository.save(TwitterIntegration("twitter 3rd party integration test", integrationCred))
 //      Publication save
-        val publication: Publication = publicationRepository.save(Publication( post, integrationCreds))
+        val publication: Publication = publicationRepository.save(Publication( post, integration))
 //        then
         val publicationUpdate: Publication = publicationRepository.save(publication)
 //      then
@@ -117,4 +124,3 @@ class PublicationRepositoryTests {
 //    }
 }
 
- */
