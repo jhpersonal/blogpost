@@ -1,10 +1,13 @@
 package com.jh.blogpost.designpatterns.singleton
 
+// Kotlin’s representation of a Singleton class requires the object keyword only.
+// An object class can contain properties, functions and the init method.
+// The constructor method is NOT allowed.
+// An object cannot be instantiated in the way a class is instantiated.
+// An object gets instantiated when it is used for the first time providing lazy initialization.
+// Object declaration’s initialization is thread-safe.
+
 // Singleton Class in Kotlin is also called as the Singleton Object in Kotlin.
-// Singleton class is a class that is defined in such a way that only one instance of the class can be created and used everywhere.
-// When we use an object instead of a class, Kotlin actually uses the Singelton and allocates the single memory.
-// The object class can have functions, properties, and the init method.
-// The constructor method is not allowed in an object so we can use the init method if some initialization is required and the object can be defined inside a class.
 // We call the method and member variables present in the singleton class using the class name.
 // Examples: to maintain a single instance of resources like a database or object store or file system.
 object DatabaseInstance {
